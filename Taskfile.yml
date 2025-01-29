@@ -1,0 +1,19 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  install_kernel:
+    cmds:
+      - uv run ipython kernel install --user --name=comp_geom
+    status:
+      - uvx --from jupyter-core --with jupyter jupyter kernelspec list | grep "comp_geom"
+
+  remove_kernel:
+    cmds:
+      - uvx --from jupyter-core --with jupyter jupyter kernelspec remove "comp_geom"
+
+  run_jupyter:
+    cmds:
+      - task: install_kernel
+      - uvx --from jupyter-core --with jupyter jupyter lab --notebook-dir=notebooks
